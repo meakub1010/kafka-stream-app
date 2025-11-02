@@ -1,0 +1,30 @@
+logging:
+  level:
+    root: INFO
+    my.stream.app.kafka_stream_app: DEBUG
+  file:
+    name: /var/logs/application.log
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092   # if running host-based Kafka
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: kstream-listener-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "my.stream.app.kafka_stream_app.model"
+    streams:
+      application-id: orders-transactions-app
+      bootstrap-servers: localhost:9092
+      auto-startup: true
+      properties:
+        commit.interval.ms: 1000
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: org.springframework.kafka.support.serializer.JsonSerde
+        spring.json.trusted.packages: "my.stream.app.kafka_stream_app.model"
+        default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndContinueExceptionHandler
+        schema.registry.url: http://localhost:8082

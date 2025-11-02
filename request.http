@@ -1,0 +1,20 @@
+POST http://localhost:8080/api/orders
+Content-Type: application/json
+
+{
+  "orderId": "12345",
+  "user": "67890",
+  "item": "widget",
+  "quantity": 2
+}
+###
+POST http://localhost:8080/api/kafka/transaction
+Content-Type: application/json
+
+{
+  "transactionId": "b32cd7a9-06d6-419a-bbfc-0a5aba386b80",
+  "orderId": "fc3fa281-3ec3-41eb-a026-3a3d14ea935e",
+  "amount": 100.99,
+  "timestamp": "2024-11-01T10:34:00Z",
+  "location": "Florida, USA"
+}
